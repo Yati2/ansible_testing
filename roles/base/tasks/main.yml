@@ -1,0 +1,29 @@
+- name: install updates
+  tags: updates
+  package:
+    update_cache: yes
+  changed_when: false
+
+- name: add ssh key for  red
+  tags: always
+  authorized_key:
+    user: red
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCuFoREe9nRB+Ij3exX98NC8XVpdxVfkj0L2Apsp3c0+etaop4ZcSK3dJ/oX3LU/GRlBGvX+MF0itjgaerXXueutTcgwep3fmdQi6vhMGnjJJ7X8xdLFsaBlkSYLdcEhDWiOHss6laSTViBBqnz8v0312Pqhp7oWRWDoOmC13M7z2YpbZI5+gB8RkoDWC2fx/3ia4YPBVuiXX5JLG4wtQmKq3lkDZUu9qHuaQkjX3KoonnIlYnBElY9wfHLimeEbKeJYec0N7m94CR1PloWAUr6zUytbsC287WDm12FJ5+4PBKy4xkT9fMmw3ekrYN7U9dOoTvWTzUsSDEh0ibIdLWongdatVnaY1FLcO4Ucoc0XHo+m9QFPFl4lJdvx1Nr/YrhBx+tZmmMfljJXwXR7mptFfzp87XIX/0vM5dWxG5T5NVdp8TYgIWGPTdT1sNQ2koSgpsK37zU9u3C9HhFN7RuFa+tw1m5nZk2LP3PFQPPdyAgcjuxvPo2+EiRvcwVOHE= root@ansible-interns "
+
+- name: generate sshd_config file from template
+  tags: ssh
+  template: 
+    src: "{{ ssh_template_file }}"
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart_sshd
+
+- name: install nodejs and npm 
+  tags: nodejs,npm
+  apt:
+    name: 
+      - nodejs
+      - npm
+    state: present 

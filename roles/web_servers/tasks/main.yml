@@ -1,0 +1,22 @@
+- name: install unzip
+  package: 
+    name: unzip
+
+- name: install terraform
+  tags: unarchive
+  unarchive:
+    src: https://releases.hashicorp.com/terraform/1.3.3/terraform_1.3.3_linux_arm64.zip
+    dest: /usr/local/bin
+    remote_src: yes
+    mode: 0755
+    owner: root
+    group: root
+
+- name: change email address for admin
+  tags: change_email
+  lineinfile:
+    path: ~/bluetooth.txt
+    regexp: '^ServerAdmin'
+    line: ServerAdmin somebody@somewhere.com
+  notify: restart_apache
+

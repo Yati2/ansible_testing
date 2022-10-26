@@ -1,0 +1,18 @@
+- name: copy files 
+  tags: copy
+  copy:
+    src: copy_test.txt 
+    dest: ~/copy_success1.txt
+    owner: root
+    group: root
+    mode: 0700
+
+- name: to stop apache service
+  tags: stop_service
+  service:
+    name: "{{ apache_service }}"
+    state: stopped
+
+- name: to install docker on yati-app
+  tags: install_docker
+  

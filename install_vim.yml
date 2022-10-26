@@ -1,0 +1,14 @@
+---
+
+- hosts: all
+  tasks:
+ 
+  - name: install vim and apache2 packages for ubuntu
+    package:
+      name: 
+        - "{{ apache_package }}"
+        - "{{ vim_package }}"
+      state: latest
+      update_cache: yes
+   
+
